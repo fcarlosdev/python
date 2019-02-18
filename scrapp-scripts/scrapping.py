@@ -1,23 +1,36 @@
+import time
+import sys
 import requests
 from bs4 import BeautifulSoup
 
 links = []
-for page in range(1,19):
+count = 1
+progress = ""
+progress_msg = ""
+for page in range(1,3):
     url = "https://www.mairovergara.com/category/como-se-diz-em-ingles/page/" + str(page) + "/"
-    print "Extracting content from the url => %s" % url
+    print "Extracting content from %s " % url
+    progress_msg = "Extracting => ["
     resp = requests.get(url)
     soup = BeautifulSoup(resp.text, "html.parser")
-    for item in soup.find_all('a'):
+
+    search_result = soup.find_all('a')
+    total = len(search_result)
+
+    for item in search_result:
         if (item.text.find('Como se diz')) > -1:
             links.append(item)
-    # print "\n"
+        progress = (progress_msg+ "." * count) + "]("+str(((count*100)/total))+"%)"
+        sys.stdout.write('\r'+progress)
+        time.sleep(.2)
+        count += 1
+    print "\n"
+    progress = ""
+    count = 1
 
 print links
 
-# resp = requests.get("https://www.mairovergara.com/category/como-se-diz-em-ingles/")
-# soup = BeautifulSoup(resp.text, "html.parser")
 
-# sentences = soup.find_all('a')
 
 # output = []
 # for item in sentences:
