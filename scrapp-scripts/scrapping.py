@@ -12,17 +12,19 @@ for page in range(1, 18):
     print "Extracting content from %s " % url
     progress_msg = "Extracting => ["
     resp = requests.get(url)
-    soup = BeautifulSoup(resp.text, "html.parser")
+    # soup = BeautifulSoup(resp.text, "html.parser")
+    soup = BeautifulSoup(resp.content, "html.parser")
 
-    search_result = soup.find_all('a')
+    search_result = soup.find_all('a',{"rel": "bookmark"})
+    # search_result = soup.find_all('h3',class_={'entry-title td-module-title'})
     total = len(search_result)
 
     for item in search_result:
-        if (item.text.find('Como se diz')) > -1:
-            links.append(item)
+        # if (item.text.find('Como se diz')) > -1:
+        links.append(item)
         progress = (progress_msg + ('.' * count) + (' ' * (total - count) + ']') + "("+str(((count*100)/total))+"%)")
         sys.stdout.write('\r'+progress)
-        time.sleep(.05)
+        time.sleep(.02)
         count += 1
     print "\n"
     progress = ""
@@ -34,5 +36,5 @@ for page in range(1, 18):
 with open('extracted_info.txt', 'w') as f:
     for item in links:
         if (item.text.find('Como se diz')) > -1:
-            f.write(str(item))
+            f.write(str(item) +'\n')
     f.close()
