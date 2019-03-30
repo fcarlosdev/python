@@ -22,7 +22,6 @@ for page in range(1, 19):
     for item in search_result:
         links.append(item)
         progress = (progress_msg + (u'\u002D' * count) + (' ' * (total - count) + ']') + "("+str(((count*100)/total))+"%)")
-        # progress = (progress_msg + (u'\u2584' * count) + (' ' * (total - count) + ']') + "("+str(((count*100)/total))+"%)")
         sys.stdout.write('\r'+progress)
         time.sleep(.02)
         count += 1
