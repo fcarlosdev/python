@@ -7,8 +7,6 @@ import os
 from bs4 import BeautifulSoup
 
 base_url = "https://www.mairovergara.com/category/como-se-diz-em-ingles/"
-# pages = range(1,5)
-# filterValues = ["Colocar as Mãos"]
 
 def getHtmlDoc(url):
     print("Connection to url "+ url)
@@ -25,7 +23,7 @@ def getTag(tag, withOptions, htmlDoc):
 def showProgress(count, total):
     progress = ("[" + (u'\u002D' * count) + (' ' * (total - count) + ']') + "("+str(((count*100)/total))+"%)")
     sys.stdout.write('\r'+progress)
-    time.sleep(.02)
+    time.sleep(.03)
 
 
 def extractUrlFomLinks(links, withValue):
